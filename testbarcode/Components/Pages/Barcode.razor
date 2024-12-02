@@ -1,0 +1,26 @@
+﻿@page "/scan-barcode"
+@inject IJSRuntime JSRuntime
+@rendermode InteractiveServer
+
+<h3>Quét mã vạch</h3>
+<video id="video" autoplay style="width: 100%; height: auto; border: 1px solid #ccc;"></video>
+<p id="result">Kết quả: <span>@Result</span></p>
+
+<button @onclick="StartScan">Bắt đầu quét</button>
+
+@code {
+    private string Result { get; set; } = "Chưa có kết quả";
+
+    private async Task StartScan()
+    {
+        await JSRuntime.InvokeVoidAsync("startBarcodeScanner");
+    }
+
+    [JSInvokable]
+    public void OnBarcodeScanned(string scannedCode)
+    {
+        Result = scannedCode;
+        StateHasChanged();
+    }
+}
+
