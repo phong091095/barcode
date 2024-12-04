@@ -25,7 +25,6 @@
 
             Quagga.onDetected((data) => {
                 console.log(data.codeResult.code);
-                DotNet.invokeMethodAsync("testbarcode.Components.Pages.Barcode", "OnBarcodeScanned", data.codeResult.code);
                 Quagga.stop();
                 stream.getTracks().forEach(track => track.stop()); // Dừng camera sau khi quét xong
             });

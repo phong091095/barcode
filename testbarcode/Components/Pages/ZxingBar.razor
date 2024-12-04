@@ -1,0 +1,28 @@
+﻿@page "/zxing"
+@using BlazorBarcodeScanner.ZXing.JS
+@using Microsoft.AspNetCore.Components.Web
+@rendermode InteractiveServer
+
+<BlazorBarcodeScanner.ZXing.JS.BarcodeReader @ref="_reader"
+                                             Title="Scan Barcode from Camera"
+                                             StartCameraAutomatically="false"
+                                             ShowStart="true"
+                                             ShowReset="true"
+                                             ShowToggleTorch="true"
+                                             ShowVideoDeviceList="true"
+                                             VideoWidth="300"
+                                             VideoHeight="200" 
+                                             OnBarcodeReceived="LocalReceivedBarcodeText" />
+
+@code {
+    private BarcodeReader _reader; // Barcode reader instance
+    private string _imgSrc = string.Empty; // Base64 image source for display   
+    private string LocalBarcodeText;
+
+    private void LocalReceivedBarcodeText(BarcodeReceivedEventArgs args)
+    {
+        this.LocalBarcodeText = args.BarcodeText;
+        Console.WriteLine(args.BarcodeText);
+        StateHasChanged();
+    }
+}
